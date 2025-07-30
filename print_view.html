@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTA Report - Print View</title>
+    <!-- Link to the print-specific CSS file -->
+    <link rel="stylesheet" href="print_style.css">
+</head>
+<body>
+    <div class="print-container">
+        <div class="print-header">
+            <h1>Coronary Computed Tomography Angiography (CCTA) Report</h1>
+        </div>
+
+        <div class="print-section" id="section-indication">
+            <div class="section-title">Clinical Indication</div>
+            <p id="print-indication"></p>
+        </div>
+
+        <div class="print-section" id="section-technique">
+            <div class="section-title">Technique</div>
+            <p id="print-technique"></p>
+        </div>
+
+        <div class="print-section" id="section-quality">
+            <div class="section-title">Technical Quality</div>
+            <p id="print-quality"></p>
+        </div>
+
+        <div class="print-section" id="section-findings">
+            <div class="section-title">Findings</div>
+            
+            <div class="subsection" id="subsection-calcium-score">
+                <div class="subsection-title">1. Coronary Artery Calcium Score</div>
+                <table class="report-table">
+                    <thead>
+                        <tr>
+                            <th>Artery</th>
+                            <th>Agatston Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Left Anterior Descending (LAD)</td><td id="print-score-lad"></td></tr>
+                        <tr><td>Left Circumflex (LCX)</td><td id="print-score-lcx"></td></tr>
+                        <tr><td>Right Coronary Artery (RCA)</td><td id="print-score-rca"></td></tr>
+                        <tr><td>Left Main (LM)</td><td id="print-score-lm"></td></tr>
+                        <tr><td><strong>TOTAL</strong></td><td><strong id="print-score-total"></strong></td></tr>
+                    </tbody>
+                </table>
+                <p class="interpretation-text" id="print-score-interpretation"></p>
+            </div>
+
+            <div class="subsection" id="subsection-arteries">
+                <div class="subsection-title">2. Coronary Arteries</div>
+                <div id="print-arteries-section">
+                    <!-- Artery details will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div class="subsection" id="subsection-collateral">
+                <div class="subsection-title">3. Collateral Circulation</div>
+                <p id="print-collateral"></p>
+            </div>
+
+            <div class="subsection" id="subsection-cardiac">
+                <div class="subsection-title">4. Cardiac Function</div>
+                <p id="print-cardiac-function"></p>
+            </div>
+            
+            <div class="subsection" id="subsection-other-structures">
+                <div class="subsection-title">5. Other Structures</div>
+                <p id="print-other-structures"></p>
+            </div>
+        </div>
+
+        <div class="print-section" id="section-impression">
+            <div class="section-title">Impression</div>
+            <p id="print-impression"></p>
+        </div>
+        
+        <div class="print-section" id="section-impression-vi">
+            <div class="section-title">Kết luận</div>
+            <p id="print-impression-vi"></p>
+        </div>
+
+        <div class="print-section" id="section-recommendation">
+            <div class="section-title">Recommendation</div>
+            <p id="print-recommendation"></p>
+        </div>
+
+        <div class="print-footer">
+            <!-- Report Indicator will be placed here -->
+            <div id="report-indicator"></div>
+            <button id="print-button" onclick="window.print()">Print Report</button>
+        </div>
+    </div>
+
+    <!-- Link to the print-specific JavaScript file -->
+    <script src="print_script.js"></script>
+</body>
+</html>

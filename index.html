@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coronary CTA Report Template</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <h2 class="report-title">CORONARY COMPUTED TOMOGRAPHY ANGIOGRAPHY (CCTA) REPORT</h2>
+
+        <h3 class="section-title">CLINICAL INDICATION</h3>
+        <input list="indications" name="indication" class="input-field full-width" placeholder="Select or type an indication..." value="Coronary artery disease risk stratification">
+        
+        <h3 class="section-title">TECHNIQUE</h3>
+        <p class="technique-p">Using a SOMATOM Drive scanner, a preliminary scout study was obtained, followed by coronary artery calcium protocol. Following administration of intravenous contrast, 0.5mm collimated images were obtained through the coronary arteries. Data were transferred off-line for 3D reconstructions including Curved MPR and multi-planar imaging.</p>
+        <p class="technique-p"><strong>ACQUISITION:</strong> Prospective ECG triggering was used. Heart rate at the time of acquisition was approximately <input type="number" class="input-field short" value="64" id="technique_hr"> bpm.</p>
+
+        <h3 class="section-title">TECHNICAL QUALITY</h3>
+        <input list="quality-options" id="quality" name="quality" class="input-field full-width" value="Excellent, with no artifacts." placeholder="Select or type quality...">
+        
+        <h3 class="section-title">FINDINGS</h3>
+        
+        <h4>1. Coronary Artery Calcium Score</h4>
+        <table class="findings-table">
+            <thead>
+                <tr>
+                    <th>Artery</th>
+                    <th>Agatston Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Left Anterior Descending (LAD)</td>
+                    <td><input type="number" id="lad_score" class="input-field score-input" value="0" min="0" oninput="calculateTotalScore()"></td>
+                </tr>
+                <tr>
+                    <td>Left Circumflex (LCX)</td>
+                    <td><input type="number" id="lcx_score" class="input-field score-input" value="0" min="0" oninput="calculateTotalScore()"></td>
+                </tr>
+                <tr>
+                    <td>Right Coronary Artery (RCA)</td>
+                    <td><input type="number" id="rca_score" class="input-field score-input" value="0" min="0" oninput="calculateTotalScore()"></td>
+                </tr>
+                <tr>
+                    <td>Left Main (LM)</td>
+                    <td><input type="number" id="lm_score" class="input-field score-input" value="0" min="0" oninput="calculateTotalScore()"></td>
+                </tr>
+                <tr>
+                    <td><strong>TOTAL</strong></td>
+                    <td><strong id="total_score" class="highlight">0</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <p id="score_interpretation"></p>
+
+        <!-- Container for the dynamically loaded Coronary Arteries section -->
+        <div id="coronary-arteries-container">
+            <!-- Content from coronary_arteries.html will be loaded here -->
+        </div>
+
+        <h4>3. Collateral Circulation</h4>
+        <input list="collateral-options" id="collateral" name="collateral" class="input-field full-width" placeholder="Select or type description...">
+        
+        <h4>4. Cardiac Function</h4>
+        <div class="cardiac-function-subsection">
+            <label for="lvef_value" style="font-weight: 500;">Estimated Left Ventricular Ejection Fraction (LVEF):</label>
+            <input type="number" id="lvef_value" class="input-field short" value="64" oninput="updateLvefDescription()"> %
+            <input list="lvef-descriptions" id="lvef_desc" name="lvef_desc" class="input-field full-width" style="margin-top: 5px;" placeholder="Select or type LVEF description...">
+        </div>
+        <div class="cardiac-function-subsection">
+             <label for="wall-motion" style="font-weight: 500;">Regional Wall Motion:</label>
+             <input list="wall-motion-options" id="wall-motion" name="wall_motion" class="input-field full-width" placeholder="Select or type wall motion abnormalities..." value="No regional wall motion abnormalities.">
+        </div>
+        
+        <h4>5. Other Structures</h4>
+        <div id="other-structures-section">
+            <textarea id="other_structures_text" class="input-field full-width" rows="4">The pericardium and visualized extracardiac structures are unremarkable.</textarea>
+            <div class="common-findings-buttons" id="other-structures-buttons">
+                <!-- Buttons will be added here by JS -->
+            </div>
+        </div>
+
+        <h3 class="section-title">IMPRESSION</h3>
+        <textarea id="impression" name="impression" class="input-field full-width" rows="5" placeholder="Impression summary will be generated here..."></textarea>
+        
+        <div class="translation-section">
+            <button class="translate-btn" onclick="translateImpression()">Dịch sang Tiếng Việt</button>
+            <textarea id="impression_vi" name="impression_vi" class="input-field full-width" rows="5" placeholder="Nội dung kết luận bằng Tiếng Việt..."></textarea>
+        </div>
+
+        <h3 class="section-title">RECOMMENDATION</h3>
+        <input list="recommendations" id="recommendation" name="recommendation" class="input-field full-width" placeholder="Select or type a recommendation..." value="Clinical correlation.">
+        
+        <div id="report-indicator-container">
+            <!-- The report status indicator will be inserted here by script.js -->
+        </div>
+
+        <div class="action-footer">
+             <button class="action-btn" onclick="prepareForPrint()">View & Print Report</button>
+             <button class="action-btn export-btn" onclick="exportToDocx()">Export to .docx</button>
+        </div>
+    </div>
+
+    <!-- All datalists remain here for the inputs to use -->
+    <datalist id="indications">
+        <option value=""></option>
+        <option value="Atypical chest pain"></option>
+        <option value="Chest pain"></option>
+        <option value="Shortness of breath"></option>
+        <option value="Pre-operative evaluation"></option>
+        <option value="Coronary artery disease risk stratification"></option>
+    </datalist>
+    <datalist id="quality-options">
+        <option value=""></option>
+        <option value="Excellent, with no artifacts."></option>
+        <option value="Good, with minimal artifacts."></option>
+        <option value="Adequate, limited by motion artifacts."></option>
+        <option value="Fair, limited by calcification/stent artifacts."></option>
+        <option value="Poor, non-diagnostic study."></option>
+        <option value="Suboptimal, significantly limited by artifacts."></option>
+    </datalist>
+    <datalist id="vessel-size-options">
+        <option value=""></option>
+        <option value="small"></option>
+        <option value="medium"></option>
+        <option value="large"></option>
+    </datalist>
+    <datalist id="lm-anatomy-options">
+        <option value=""></option>
+        <option value="bifurcates into the LAD and LCX."></option>
+        <option value="trifurcates into the LAD, LCX and a ramus intermedius branch."></option>
+        <option value="gives rise to separate LAD and LCX origins."></option>
+    </datalist>
+    <datalist id="lad-anatomy-options">
+        <option value=""></option>
+        <option value="courses in the anterior interventricular groove."></option>
+        <option value="gives rise to several diagonal branches."></option>
+    </datalist>
+    <datalist id="lcx-anatomy-options">
+        <option value=""></option>
+        <option value="courses in the left atrioventricular groove."></option>
+        <option value="gives rise to several obtuse marginal branches."></option>
+    </datalist>
+     <datalist id="rca-anatomy-options">
+        <option value=""></option>
+        <option value="courses in the right atrioventricular groove."></option>
+        <option value="gives rise to the posterior descending artery (PDA)."></option>
+        <option value="gives rise to the posterior descending artery (PDA) and posterolateral (PL) branches."></option>
+    </datalist>
+    <datalist id="quick-lesion-options">
+        <option value=""></option>
+        <option value="Normal, without plaque or stenosis."></option>
+        <option value="Mild diffuse wall thickening without significant stenosis."></option>
+        <option value="Vessel is diffusely diseased and small in caliber."></option>
+    </datalist>
+    <datalist id="segment-options">
+        <option value=""></option>
+        <option value="Ostial"></option>
+        <option value="Proximal"></option>
+        <option value="Mid"></option>
+        <option value="Distal"></option>
+        <option value="Proximal to Mid"></option>
+        <option value="Mid to Distal"></option>
+        <option value="Proximal to Distal"></option>
+    </datalist>
+    <datalist id="lesion-type-options">
+        <option value=""></option>
+        <option value="Atherosclerotic lesion"></option>
+        <option value="Calcified plaque"></option>
+        <option value="Non-calcified plaque"></option>
+        <option value="Mixed plaque"></option>
+    </datalist>
+    <datalist id="remodeling-options">
+        <option value=""></option>
+        <option value="positive remodeling"></option>
+        <option value="negative remodeling"></option>
+        <option value="no remodeling"></option>
+    </datalist>
+    <datalist id="composition-options">
+        <option value=""></option>
+        <option value="Non-calcified"></option>
+        <option value="Calcified"></option>
+        <option value="Partially calcified"></option>
+        <option value="Mixed"></option>
+    </datalist>
+    <datalist id="attenuation-options">
+        <option value=""></option>
+        <option value="low-attenuation"></option>
+        <option value="iso-attenuation"></option>
+        <option value="high-attenuation (>30 HU)"></option>
+    </datalist>
+    <datalist id="texture-options">
+        <option value=""></option>
+        <option value="homogenous"></option>
+        <option value="heterogeneous"></option>
+    </datalist>
+    <datalist id="stenosis-options">
+        <option value=""></option>
+        <option value="<30% (mild)"></option>
+        <option value="30-50% (mild-moderate)"></option>
+        <option value="50-70% (moderate)"></option>
+        <option value="70-90% (severe)"></option>
+        <option value="90-99% (subtotal occlusion)"></option>
+        <option value="100% (total occlusion)"></option>
+        <option value="CTO (Chronic Total Occlusion)"></option>
+        <option value="Obscuring artifact"></option>
+    </datalist>
+    <datalist id="dominance-options">
+        <option value=""></option>
+        <option value="Right dominant"></option>
+        <option value="Left dominant"></option>
+        <option value="Co-dominant"></option>
+    </datalist>
+    <datalist id="collateral-options">
+        <option value=""></option>
+        <option value="No significant collateral circulation identified."></option>
+        <option value="Present between LAD and RCA."></option>
+        <option value="Present between LCX and RCA."></option>
+        <option value="Well-developed collateral circulation."></option>
+    </datalist>
+    <datalist id="lvef-descriptions">
+        <option value=""></option>
+        <option value="Normal left ventricular systolic function"></option>
+        <option value="Mildly reduced left ventricular systolic function"></option>
+        <option value="Moderately reduced left ventricular systolic function"></option>
+        <option value="Severely reduced left ventricular systolic function"></option>
+    </datalist>
+    <datalist id="wall-motion-options">
+        <option value=""></option>
+        <option value="No regional wall motion abnormalities."></option>
+        <option value="Hypokinesis of the anterior wall."></option>
+        <option value="Akinesis of the anterior wall."></option>
+        <option value="Hypokinesis of the inferior wall."></option>
+        <option value="Akinesis of the inferior wall."></option>
+        <option value="Hypokinesis of the lateral wall."></option>
+        <option value="Akinesis of the lateral wall."></option>
+        <option value="Apical akinesis."></option>
+    </datalist>
+    <datalist id="recommendations">
+        <option value=""></option>
+        <option value="Clinical correlation."></option>
+        <option value="Follow-up as clinically indicated."></option>
+        <option value="Cardiology consultation is recommended."></option>
+        <option value="Optimal medical management is recommended."></option>
+    </datalist>
+
+    <!-- Lesion Management Modal -->
+    <div id="lesionModal" class="modal-overlay">
+        <!-- Modal content is still here to be used by script.js -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" onclick="closeLesionModal()">&times;</span>
+                <h2 id="modalTitle">Manage Lesions</h2>
+            </div>
+            <div class="modal-body">
+                <div class="lesion-form-modal">
+                    <h4>Add New Lesion</h4>
+                    <div class="form-row">
+                        <label>Segment:</label>
+                        <input id="lesion-segment" list="segment-options" class="input-field" placeholder="e.g., Proximal, Mid, Distal">
+                    </div>
+                    <div class="form-row">
+                        <label>Lesion:</label>
+                        <input id="lesion-type" list="lesion-type-options" class="input-field" placeholder="e.g., Atherosclerotic lesion">
+                        <label>with</label>
+                        <input id="lesion-remodeling" list="remodeling-options" class="input-field" placeholder="e.g., positive remodeling">
+                    </div>
+                    <div class="form-row">
+                        <label>Plaque:</label>
+                        <input id="lesion-composition" list="composition-options" class="input-field" placeholder="e.g., Non-calcified">
+                        <input id="lesion-attenuation" list="attenuation-options" class="input-field" placeholder="e.g., high-attenuation">
+                        <input id="lesion-texture" list="texture-options" class="input-field" placeholder="e.g., homogenous">
+                    </div>
+                    <div class="form-row">
+                        <label>Stenosis:</label>
+                        <input id="lesion-stenosis" list="stenosis-options" class="input-field" placeholder="e.g., 50-69% (moderate)">
+                    </div>
+                    <button class="manage-lesion-btn" style="background-color: #27ae60;" onclick="addLesionToModal()">Add This Lesion</button>
+                </div>
+                <hr style="margin: 20px 0;">
+                <h4>Current Lesions</h4>
+                <ul id="lesions-list-modal">
+                    <!-- Lesions will be added here dynamically -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="manage-lesion-btn" style="background-color: #2980b9;" onclick="saveLesions()">Save and Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Restore Session Modal -->
+    <div id="restoreModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Restore Previous Session?</h2>
+            </div>
+            <div class="modal-body">
+                <p>We found a previously saved report draft. Would you like to restore it?</p>
+            </div>
+            <div class="modal-footer" style="text-align: center;">
+                <button class="restore-btn restore-yes" id="restore-yes-btn">Yes, Restore</button>
+                <button class="restore-btn restore-no" id="restore-no-btn">No, Start New</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Link to the external JavaScript files -->
+    <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
+    <script src="docx-exporter.js"></script>
+    <script src="translation.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

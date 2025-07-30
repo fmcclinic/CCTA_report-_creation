@@ -1,0 +1,297 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+.report-title {
+    text-align:center; 
+    font-size: 20px; 
+    color: #34495e; 
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+.findings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+.findings-table th, .findings-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+.findings-table th {
+    background-color: #ecf0f1;
+    font-weight: 500;
+}
+.input-field {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.input-field.full-width {
+    width: 98%;
+}
+.input-field.short {
+    width: 60px;
+    text-align: center;
+}
+.input-field.score-input {
+    width: 95%;
+    text-align: left;
+}
+.input-field:focus {
+    outline: none;
+    border-color: #3498db;
+}
+.highlight {
+    font-weight: 700;
+    color: #c0392b;
+}
+.technique-p {
+    margin-bottom: 10px;
+}
+#score_interpretation {
+    font-size: 14px; 
+    margin-top: 10px;
+    font-style: italic;
+}
+.manage-lesion-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 5px;
+}
+.manage-lesion-btn:hover {
+    background-color: #2980b9;
+}
+.lesion-summary {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 10px 0 5px 0;
+}
+.anatomical-description {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #e0e0e0;
+}
+.anatomical-description .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+}
+.anatomical-description .form-row label {
+    font-weight: 500;
+    margin-right: 5px;
+    white-space: nowrap;
+}
+.actions-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+.actions-row .input-field {
+    flex: 1;
+}
+.cardiac-function-subsection {
+    margin-top: 10px;
+}
+.common-findings-buttons {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.finding-btn {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    padding: 5px 10px;
+    border-radius: 15px; /* Pill shape */
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+.finding-btn:hover {
+    background-color: #d6dde3;
+}
+.translation-section {
+    margin-top: 10px;
+}
+.translate-btn {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.translate-btn:hover {
+    background-color: #5a6268;
+}
+.action-footer {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+#report-indicator-container {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.report-indicator {
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+}
+.indicator-normal {
+    background-color: #28a745; /* Green */
+}
+.indicator-high-risk {
+    background-color: #dc3545; /* Red */
+}
+.action-btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+#print-preview-button {
+    background-color: #007bff;
+}
+.export-btn {
+    background-color: #17a2b8;
+}
+/* Modal Styles */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 700px;
+    border-radius: 8px;
+}
+.modal-header {
+    padding: 10px 16px;
+    border-bottom: 1px solid #ddd;
+}
+.modal-header h2 {
+    margin: 0;
+}
+.modal-body { padding: 16px; max-height: 60vh; overflow-y: auto; }
+.modal-footer {
+    padding: 10px 16px;
+    border-top: 1px solid #ddd;
+    text-align: right;
+}
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.lesion-form-modal .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.lesion-form-modal .form-row label {
+    margin-right: 10px;
+    font-weight: 500;
+    min-width: 70px;
+}
+.lesion-form-modal .form-row .input-field {
+    flex: 1;
+    min-width: 120px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+#lesions-list-modal {
+    list-style-type: none;
+    padding: 0;
+}
+#lesions-list-modal li {
+    background: #e9ecef;
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.delete-lesion-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+/* Restore Modal Styles */
+.restore-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+    margin: 0 10px;
+}
+.restore-yes {
+    background-color: #28a745;
+}
+.restore-no {
+    background-color: #6c757d;
+}

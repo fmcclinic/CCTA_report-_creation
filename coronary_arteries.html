@@ -1,0 +1,105 @@
+<h4>2. Coronary Arteries</h4>
+<table class="findings-table">
+    <thead>
+        <tr>
+            <th>Artery</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Dominance</strong></td>
+            <td>
+                <input list="dominance-options" name="dominance" class="input-field full-width" placeholder="Select or type dominance...">
+            </td>
+        </tr>
+        <tr id="artery-lm">
+            <td><strong>Left Main (LM)</strong></td>
+            <td class="description-container">
+                <div class="anatomical-description">
+                   <div class="form-row">
+                        <label for="size-lm">Size:</label>
+                        <input id="size-lm" list="vessel-size-options" class="input-field" style="width: 120px;" placeholder="e.g., medium">
+                        <label for="diameter-lm" style="margin-left: 10px;">Proximal Diameter (mm):</label>
+                        <input type="number" step="0.1" class="input-field short" id="diameter-lm" oninput="updateVesselSize('lm')">
+                   </div>
+                   <div class="form-row">
+                        <label for="anatomy-lm" style="width: auto;">Anatomy:</label>
+                        <input id="anatomy-lm" list="lm-anatomy-options" class="input-field" style="flex: 1;" placeholder="e.g., bifurcates into...">
+                   </div>
+                </div>
+                <div id="desc-lm"></div>
+                <div class="actions-row">
+                    <input list="quick-lesion-options" class="input-field" onchange="applyQuickDescription('lm', this.value)" placeholder="Quick description...">
+                    <button class="manage-lesion-btn" onclick="openLesionModal('lm', 'Left Main (LM)')">Manage Lesions</button>
+                </div>
+            </td>
+        </tr>
+        <tr id="artery-lad">
+            <td><strong>Left Anterior Descending (LAD)</strong></td>
+            <td class="description-container">
+                <div class="anatomical-description">
+                   <div class="form-row">
+                        <label for="size-lad">Size:</label>
+                        <input id="size-lad" list="vessel-size-options" class="input-field" style="width: 120px;" placeholder="e.g., medium">
+                        <label for="diameter-lad" style="margin-left: 10px;">Proximal Diameter (mm):</label>
+                        <input type="number" step="0.1" class="input-field short" id="diameter-lad" oninput="updateVesselSize('lad')">
+                   </div>
+                   <div class="form-row">
+                        <label for="anatomy-lad" style="width: auto;">Anatomy:</label>
+                        <input id="anatomy-lad" list="lad-anatomy-options" class="input-field" style="flex: 1;" placeholder="e.g., courses in...">
+                   </div>
+                </div>
+                <div id="desc-lad"></div>
+                <div class="actions-row">
+                    <input list="quick-lesion-options" class="input-field" onchange="applyQuickDescription('lad', this.value)" placeholder="Quick description...">
+                    <button class="manage-lesion-btn" onclick="openLesionModal('lad', 'Left Anterior Descending (LAD)')">Manage Lesions</button>
+                </div>
+            </td>
+        </tr>
+        <tr id="artery-lcx">
+            <td><strong>Left Circumflex (LCX)</strong></td>
+            <td class="description-container">
+                <div class="anatomical-description">
+                   <div class="form-row">
+                        <label for="size-lcx">Size:</label>
+                        <input id="size-lcx" list="vessel-size-options" class="input-field" style="width: 120px;" placeholder="e.g., medium">
+                        <label for="diameter-lcx" style="margin-left: 10px;">Proximal Diameter (mm):</label>
+                        <input type="number" step="0.1" class="input-field short" id="diameter-lcx" oninput="updateVesselSize('lcx')">
+                   </div>
+                   <div class="form-row">
+                        <label for="anatomy-lcx" style="width: auto;">Anatomy:</label>
+                        <input id="anatomy-lcx" list="lcx-anatomy-options" class="input-field" style="flex: 1;" placeholder="e.g., courses in...">
+                   </div>
+                </div>
+                <div id="desc-lcx"></div>
+                <div class="actions-row">
+                    <input list="quick-lesion-options" class="input-field" onchange="applyQuickDescription('lcx', this.value)" placeholder="Quick description...">
+                    <button class="manage-lesion-btn" onclick="openLesionModal('lcx', 'Left Circumflex (LCX)')">Manage Lesions</button>
+                </div>
+            </td>
+        </tr>
+        <tr id="artery-rca">
+            <td><strong>Right Coronary Artery (RCA)</strong></td>
+            <td class="description-container">
+                <div class="anatomical-description">
+                   <div class="form-row">
+                        <label for="size-rca">Size:</label>
+                        <input id="size-rca" list="vessel-size-options" class="input-field" style="width: 120px;" placeholder="e.g., medium">
+                        <label for="diameter-rca" style="margin-left: 10px;">Proximal Diameter (mm):</label>
+                        <input type="number" step="0.1" class="input-field short" id="diameter-rca" oninput="updateVesselSize('rca')">
+                   </div>
+                   <div class="form-row">
+                        <label for="anatomy-rca" style="width: auto;">Anatomy:</label>
+                        <input id="anatomy-rca" list="rca-anatomy-options" class="input-field" style="flex: 1;" placeholder="e.g., courses in...">
+                   </div>
+                </div>
+                <div id="desc-rca"></div>
+                <div class="actions-row">
+                    <input list="quick-lesion-options" class="input-field" onchange="applyQuickDescription('rca', this.value)" placeholder="Quick description...">
+                    <button class="manage-lesion-btn" onclick="openLesionModal('rca', 'Right Coronary Artery (RCA)')">Manage Lesions</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
