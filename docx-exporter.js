@@ -48,19 +48,6 @@ async function generateDocx(reportData) {
         alignment: docx.AlignmentType.CENTER,
     }));
 
-    // Report Indicator
-    children.push(new docx.Paragraph({
-        text: reportData.risk_level === 'high-risk' ? 'Report Status: HIGH RISK FINDINGS' : 'Report Status: NORMAL / LOW RISK FINDINGS',
-        alignment: docx.AlignmentType.CENTER,
-        style: "Normal",
-        shading: {
-            type: docx.ShadingType.SOLID,
-            color: reportData.risk_level === 'high-risk' ? "DC3545" : "28A745",
-            fill: reportData.risk_level === 'high-risk' ? "DC3545" : "28A745",
-        },
-        run: { color: "FFFFFF", bold: true },
-    }));
-
     // Add sections if they have content
     if (reportData.clinical_indication) children.push(createHeading("Clinical Indication"), createParagraph(reportData.clinical_indication));
     if (reportData.technique_hr) children.push(createHeading("Technique"), createParagraph(`Prospective ECG-gated coronary CTA was performed. Heart rate at the time of acquisition was approximately ${reportData.technique_hr} bpm.`));
@@ -120,6 +107,30 @@ async function generateDocx(reportData) {
     if (reportData.impression) children.push(createHeading("Impression"), createParagraph(reportData.impression));
     if (reportData.impression_vi) children.push(createHeading("Kết luận"), createParagraph(reportData.impression_vi));
     if (reportData.recommendation) children.push(createHeading("Recommendation"), createParagraph(reportData.recommendation));
+
+    // Report Indicator at the end
+    let indicatorText, indicatorHighlightColor;
+    if (reportData.risk_level === 'high-risk') {
+        indicatorText = 'Report Status: HIGH RISK FINDINGS';
+        indicatorHighlightColor = 'red';
+    } else if (reportData.risk_level === 'moderate-risk') {
+        indicatorText = 'Report Status: MODERATE RISK FINDINGS';
+        indicatorHighlightColor = 'yellow';
+    } else {
+        indicatorText = 'Report Status: NORMAL / LOW RISK FINDINGS';
+        indicatorHighlightColor = 'green';
+    }
+    const indicator = new docx.Paragraph({
+        alignment: docx.AlignmentType.CENTER,
+        children: [
+            new docx.TextRun({
+                text: indicatorText,
+                bold: true,
+                highlight: indicatorHighlightColor,
+            }),
+        ],
+    });
+    children.push(indicator);
 
     // --- Create the Document with all sections at once ---
     const doc = new docx.Document({

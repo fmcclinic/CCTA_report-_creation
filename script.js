@@ -278,13 +278,15 @@ function generateImpressionSummary() {
     let impressionLines = [];
     let significantLesionSummaries = [];
     let hasNonObstructiveDisease = false;
-    let isHighRisk = false;
+    let riskLevel = 'normal'; // normal, moderate-risk, high-risk
 
     // 1. Add Calcium Score
-    const totalScore = document.getElementById('total_score').textContent;
+    const totalScore = parseInt(document.getElementById('total_score').textContent) || 0;
     impressionLines.push(`Total Coronary Artery Calcium Score: ${totalScore}.`);
-    if (parseInt(totalScore) > 100) {
-        isHighRisk = true;
+    if (totalScore > 400) {
+        riskLevel = 'high-risk';
+    } else if (totalScore > 100) {
+        riskLevel = 'moderate-risk';
     }
 
     // 2. Collect all lesion summaries
@@ -295,7 +297,7 @@ function generateImpressionSummary() {
             const summary = formatLesionForImpression(lesion, arteryId);
             if (summary) {
                 significantLesionSummaries.push(summary);
-                isHighRisk = true; // Obstructive disease is high risk
+                riskLevel = 'high-risk'; // Obstructive disease is always high risk
             }
             if (lesion.custom && lesion.custom.toLowerCase().includes('normal')) {
                 // This is a normal vessel, do nothing
@@ -313,6 +315,7 @@ function generateImpressionSummary() {
         impressionLines.push(...significantLesionSummaries);
     } else if (hasNonObstructiveDisease) {
         impressionLines.push("Mild non-obstructive coronary artery disease.");
+        if (riskLevel !== 'high-risk') riskLevel = 'moderate-risk'; // Non-obstructive is moderate risk
     } else {
         impressionLines.push("Normal coronary arteries without evidence of significant atherosclerotic disease.");
     }
@@ -321,7 +324,7 @@ function generateImpressionSummary() {
     if (otherFindingsSummaries.length > 0) {
         impressionLines.push(`Additional findings include ${otherFindingsSummaries.join(', ')}.`);
         if (otherFindingsSummaries.some(s => s.includes('pulmonary embolism') || s.includes('thrombus'))) {
-            isHighRisk = true;
+            riskLevel = 'high-risk';
         }
     }
 
@@ -329,18 +332,29 @@ function generateImpressionSummary() {
     document.getElementById('impression').value = impressionLines.join('\n');
     
     // 6. Update the indicator
-    updateReportIndicator(isHighRisk);
-    return isHighRisk ? 'high-risk' : 'normal';
+    updateReportIndicator(riskLevel);
+    return riskLevel;
 }
 
-function updateReportIndicator(isHighRisk) {
+function updateReportIndicator(riskLevel) {
     const indicatorContainer = document.getElementById('report-indicator-container');
-    if (isHighRisk) {
-        indicatorContainer.innerHTML = `<div class="report-indicator indicator-high-risk">Report Status: HIGH RISK FINDINGS</div>`;
+    const indicator = document.createElement('div');
+    indicator.className = 'indicator-text';
+
+    if (riskLevel === 'high-risk') {
+        indicator.classList.add('indicator-high-risk');
+        indicator.textContent = 'Report Status: HIGH RISK FINDINGS';
+    } else if (riskLevel === 'moderate-risk') {
+        indicator.classList.add('indicator-moderate-risk');
+        indicator.textContent = 'Report Status: MODERATE RISK FINDINGS';
     } else {
-        indicatorContainer.innerHTML = `<div class="report-indicator indicator-normal">Report Status: NORMAL / LOW RISK FINDINGS</div>`;
+        indicator.classList.add('indicator-normal');
+        indicator.textContent = 'Report Status: NORMAL / LOW RISK FINDINGS';
     }
+    indicatorContainer.innerHTML = ''; // Clear previous indicator
+    indicatorContainer.appendChild(indicator);
 }
+
 
 function gatherReportData() {
     const riskLevel = generateImpressionSummary();
@@ -469,7 +483,7 @@ document.addEventListener('DOMContentLoaded', function() {
     calculateTotalScore();
     updateLvefDescription();
     populateOtherFindingButtons();
-    updateReportIndicator(false); // Initialize with normal status
+    updateReportIndicator('normal'); // Initialize with normal status
 
     // Auto-save on any change
     document.querySelector('.container').addEventListener('change', saveReportDraft);

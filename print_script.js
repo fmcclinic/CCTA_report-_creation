@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (reportData.risk_level === 'high-risk') {
         indicator.className = 'indicator-high-risk';
         indicator.textContent = 'Report Status: HIGH RISK FINDINGS';
+    } else if (reportData.risk_level === 'moderate-risk') {
+        indicator.className = 'indicator-moderate-risk';
+        indicator.textContent = 'Report Status: MODERATE RISK FINDINGS';
     } else {
         indicator.className = 'indicator-normal';
         indicator.textContent = 'Report Status: NORMAL / LOW RISK FINDINGS';

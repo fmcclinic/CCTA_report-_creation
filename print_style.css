@@ -28,19 +28,31 @@ body {
     font-weight: 600;
 }
 #report-indicator {
-    padding: 10px;
+    display: inline-block;
+    padding: 8px 15px;
     margin-bottom: 20px;
-    border-radius: 5px;
-    text-align: center;
+    border-radius: 20px;
     font-weight: bold;
-    font-size: 16px;
-    color: white;
+    font-size: 14px;
+    border: 1px solid transparent;
+}
+.indicator-container {
+    text-align: center;
 }
 .indicator-normal {
-    background-color: #28a745; /* Green */
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+.indicator-moderate-risk {
+    background-color: #fff3cd;
+    color: #856404;
+    border-color: #ffeeba;
 }
 .indicator-high-risk {
-    background-color: #dc3545; /* Red */
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
 }
 .print-section {
     margin-bottom: 25px;
