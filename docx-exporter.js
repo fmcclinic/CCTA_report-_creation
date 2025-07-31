@@ -110,19 +110,20 @@ async function generateDocx(reportData) {
 
     // Report Indicator at the end
     let indicatorText, indicatorHighlightColor;
-    if (reportData.risk_level === 'high-risk') {
-        indicatorText = 'Report Status: HIGH RISK FINDINGS';
+    if (reportData.risk_level === 'critical') {
+        indicatorText = 'Critical / Nguy cơ cao';
         indicatorHighlightColor = 'red';
-    } else if (reportData.risk_level === 'moderate-risk') {
-        indicatorText = 'Report Status: MODERATE RISK FINDINGS';
+    } else if (reportData.risk_level === 'warning') {
+        indicatorText = 'Warning / Thận trọng';
         indicatorHighlightColor = 'yellow';
     } else {
-        indicatorText = 'Report Status: NORMAL / LOW RISK FINDINGS';
+        indicatorText = 'Normal / Bình Thường';
         indicatorHighlightColor = 'green';
     }
     const indicator = new docx.Paragraph({
         alignment: docx.AlignmentType.CENTER,
         children: [
+            new docx.TextRun({ text: "Report Indicator / Chỉ báo nguy cơ: ", bold: true }),
             new docx.TextRun({
                 text: indicatorText,
                 bold: true,

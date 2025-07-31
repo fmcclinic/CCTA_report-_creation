@@ -278,15 +278,15 @@ function generateImpressionSummary() {
     let impressionLines = [];
     let significantLesionSummaries = [];
     let hasNonObstructiveDisease = false;
-    let riskLevel = 'normal'; // normal, moderate-risk, high-risk
+    let riskLevel = 'normal'; // normal, warning, critical
 
     // 1. Add Calcium Score
     const totalScore = parseInt(document.getElementById('total_score').textContent) || 0;
     impressionLines.push(`Total Coronary Artery Calcium Score: ${totalScore}.`);
     if (totalScore > 400) {
-        riskLevel = 'high-risk';
+        riskLevel = 'critical';
     } else if (totalScore > 100) {
-        riskLevel = 'moderate-risk';
+        riskLevel = 'warning';
     }
 
     // 2. Collect all lesion summaries
@@ -297,7 +297,7 @@ function generateImpressionSummary() {
             const summary = formatLesionForImpression(lesion, arteryId);
             if (summary) {
                 significantLesionSummaries.push(summary);
-                riskLevel = 'high-risk'; // Obstructive disease is always high risk
+                riskLevel = 'critical'; // Obstructive disease is always critical
             }
             if (lesion.custom && lesion.custom.toLowerCase().includes('normal')) {
                 // This is a normal vessel, do nothing
@@ -315,7 +315,7 @@ function generateImpressionSummary() {
         impressionLines.push(...significantLesionSummaries);
     } else if (hasNonObstructiveDisease) {
         impressionLines.push("Mild non-obstructive coronary artery disease.");
-        if (riskLevel !== 'high-risk') riskLevel = 'moderate-risk'; // Non-obstructive is moderate risk
+        if (riskLevel !== 'critical') riskLevel = 'warning'; // Non-obstructive is warning
     } else {
         impressionLines.push("Normal coronary arteries without evidence of significant atherosclerotic disease.");
     }
@@ -324,7 +324,7 @@ function generateImpressionSummary() {
     if (otherFindingsSummaries.length > 0) {
         impressionLines.push(`Additional findings include ${otherFindingsSummaries.join(', ')}.`);
         if (otherFindingsSummaries.some(s => s.includes('pulmonary embolism') || s.includes('thrombus'))) {
-            riskLevel = 'high-risk';
+            riskLevel = 'critical';
         }
     }
 
@@ -338,20 +338,25 @@ function generateImpressionSummary() {
 
 function updateReportIndicator(riskLevel) {
     const indicatorContainer = document.getElementById('report-indicator-container');
+    const indicatorTitle = document.createElement('div');
+    indicatorTitle.className = 'indicator-title';
+    indicatorTitle.textContent = 'Report Indicator / Chỉ báo nguy cơ:';
+    
     const indicator = document.createElement('div');
     indicator.className = 'indicator-text';
 
-    if (riskLevel === 'high-risk') {
-        indicator.classList.add('indicator-high-risk');
-        indicator.textContent = 'Report Status: HIGH RISK FINDINGS';
-    } else if (riskLevel === 'moderate-risk') {
-        indicator.classList.add('indicator-moderate-risk');
-        indicator.textContent = 'Report Status: MODERATE RISK FINDINGS';
+    if (riskLevel === 'critical') {
+        indicator.classList.add('indicator-critical');
+        indicator.textContent = 'Critical / Nguy cơ cao';
+    } else if (riskLevel === 'warning') {
+        indicator.classList.add('indicator-warning');
+        indicator.textContent = 'Warning / Thận trọng';
     } else {
         indicator.classList.add('indicator-normal');
-        indicator.textContent = 'Report Status: NORMAL / LOW RISK FINDINGS';
+        indicator.textContent = 'Normal / Bình Thường';
     }
     indicatorContainer.innerHTML = ''; // Clear previous indicator
+    indicatorContainer.appendChild(indicatorTitle);
     indicatorContainer.appendChild(indicator);
 }
 

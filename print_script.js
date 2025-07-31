@@ -36,16 +36,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Populate the report ---
 
     // Report Indicator
+    const indicatorContainer = document.querySelector('.indicator-container');
     const indicator = document.getElementById('report-indicator');
-    if (reportData.risk_level === 'high-risk') {
-        indicator.className = 'indicator-high-risk';
-        indicator.textContent = 'Report Status: HIGH RISK FINDINGS';
-    } else if (reportData.risk_level === 'moderate-risk') {
-        indicator.className = 'indicator-moderate-risk';
-        indicator.textContent = 'Report Status: MODERATE RISK FINDINGS';
+    if (reportData.risk_level === 'critical') {
+        indicator.className = 'indicator-critical';
+        indicator.textContent = 'Critical / Nguy cơ cao';
+    } else if (reportData.risk_level === 'warning') {
+        indicator.className = 'indicator-warning';
+        indicator.textContent = 'Warning / Thận trọng';
     } else {
         indicator.className = 'indicator-normal';
-        indicator.textContent = 'Report Status: NORMAL / LOW RISK FINDINGS';
+        indicator.textContent = 'Normal / Bình Thường';
     }
 
     renderSection('section-indication', reportData.clinical_indication, data => {
