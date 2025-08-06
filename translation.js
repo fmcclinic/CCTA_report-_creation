@@ -1,6 +1,13 @@
 // --- TRANSLATION DICTIONARY & LOGIC ---
 
 const translationDictionary = {
+    // === MỤC MỚI ĐƯỢC THÊM VÀO ===
+    "Interpretation: No coronary artery calcification detected. Low cardiovascular risk.": "Diễn giải: Không phát hiện vôi hóa động mạch vành. Nguy cơ tim mạch thấp.",
+    "Interpretation: Minimal coronary artery calcification detected. Low cardiovascular risk.": "Diễn giải: Phát hiện vôi hóa động mạch vành tối thiểu. Nguy cơ tim mạch thấp.",
+    "Interpretation: Mild coronary artery calcification detected. Moderate cardiovascular risk.": "Diễn giải: Phát hiện vôi hóa động mạch vành mức độ nhẹ. Nguy cơ tim mạch trung bình.",
+    "Interpretation: Moderate coronary artery calcification detected. Moderately high cardiovascular risk.": "Diễn giải: Phát hiện vôi hóa động mạch vành mức độ trung bình. Nguy cơ tim mạch cao vừa phải.",
+    "Interpretation: Severe coronary artery calcification detected. High cardiovascular risk.": "Diễn giải: Phát hiện vôi hóa động mạch vành mức độ nặng. Nguy cơ tim mạch cao.",
+    // === CÁC MỤC HIỆN CÓ ===
     "Normal coronary arteries without evidence of significant atherosclerotic disease.": "Các động mạch vành bình thường, không có bằng chứng của bệnh lý xơ vữa có ý nghĩa.",
     "Mild non-obstructive coronary artery disease.": "Bệnh động mạch vành không tắc nghẽn mức độ nhẹ.",
     "Additional findings include": "Các phát hiện khác bao gồm",
