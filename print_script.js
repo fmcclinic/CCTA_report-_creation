@@ -53,9 +53,23 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('print-indication').textContent = data;
     });
 
+    // --- LOGIC CẬP NHẬT CHO MỤC TECHNIQUE VÀ MEDICATIONS ---
     renderSection('section-technique', reportData.technique_hr, data => {
         document.getElementById('print-technique').textContent = `Prospective ECG-gated coronary CTA was performed. Heart rate at the time of acquisition was approximately ${data} bpm.`;
+    
+        // Logic to render medications
+        const meds = reportData.medications;
+        const medList = [];
+        if (meds.betaloc) medList.push("Betaloc");
+        if (meds.nitro) medList.push("Nitroglycerine");
+        if (meds.other) medList.push(meds.other);
+
+        if (medList.length > 0) {
+            const medElement = document.getElementById('print-medications');
+            medElement.textContent = `Medications administered: ${medList.join(', ')}.`;
+        }
     });
+    // --- KẾT THÚC CẬP NHẬT ---
 
     renderSection('section-quality', reportData.technical_quality, data => {
         document.getElementById('print-quality').textContent = data;

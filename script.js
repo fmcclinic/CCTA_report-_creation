@@ -254,6 +254,8 @@ function populateOtherFindingButtons() {
 }
 
 // --- IMPRESSION, INDICATOR & PRINTING LOGIC ---
+
+// === FUNCTION BỊ THIẾU ĐÃ ĐƯỢC KHÔI PHỤC ===
 function formatLesionForImpression(lesion, arteryId) {
     if (!lesion || !lesion.stenosis) return null;
 
@@ -273,6 +275,7 @@ function formatLesionForImpression(lesion, arteryId) {
     }
     return null;
 }
+// === KẾT THÚC PHẦN KHÔI PHỤC ===
 
 function generateImpressionSummary() {
     let impressionLines = [];
@@ -282,11 +285,11 @@ function generateImpressionSummary() {
 
     // 1. Add Calcium Score and its Interpretation
     const totalScore = parseInt(document.getElementById('total_score').textContent) || 0;
-    const scoreInterpretation = document.getElementById('score_interpretation').textContent; // Lấy văn bản diễn giải
+    const scoreInterpretation = document.getElementById('score_interpretation').textContent; 
 
     impressionLines.push(`Total Coronary Artery Calcium Score: ${totalScore}.`);
     if (scoreInterpretation) {
-        impressionLines.push(scoreInterpretation); // Thêm diễn giải vào kết luận
+        impressionLines.push(scoreInterpretation); 
     }
 
     if (totalScore > 400) {
@@ -372,13 +375,11 @@ function gatherReportData() {
     return {
         clinical_indication: document.querySelector('[name="indication"]').value,
         technique_hr: document.getElementById('technique_hr').value,
-        // === MỤC MỚI ĐƯỢC THÊM VÀO ===
         medications: {
             betaloc: document.getElementById('med_betaloc').checked,
             nitro: document.getElementById('med_nitro').checked,
             other: document.getElementById('med_other').value,
         },
-        // === KẾT THÚC MỤC MỚI ===
         technical_quality: document.getElementById('quality').value,
         calcium_scores: {
             lad: document.getElementById('lad_score').value,
@@ -433,7 +434,13 @@ function saveReportDraft() {
     // Get all input, select, and textarea values
     document.querySelectorAll('input, textarea').forEach(el => {
         if (el.id) {
-            draftData.inputs[el.id] = el.value;
+            // Check if the element is a checkbox and save its checked state
+            if (el.type === 'checkbox') {
+                draftData.inputs[el.id] = el.checked;
+            } else {
+                // For all other inputs, save their value
+                draftData.inputs[el.id] = el.value;
+            }
         }
     });
     localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
@@ -444,7 +451,13 @@ function loadReportDraft(draftData) {
     Object.entries(draftData.inputs).forEach(([id, value]) => {
         const el = document.getElementById(id);
         if (el) {
-            el.value = value;
+            // Check if the element is a checkbox and restore its checked state
+            if (el.type === 'checkbox') {
+                el.checked = value;
+            } else {
+                // For all other inputs, restore their value
+                el.value = value;
+            }
         }
     });
 
@@ -503,7 +516,7 @@ document.addEventListener('DOMContentLoaded', function() {
     populateOtherFindingButtons();
     updateReportIndicator('normal'); // Initialize with normal status
 
-    // Auto-save on any change
+    // Auto-save on any change to input fields, textareas, or select elements
     document.querySelector('.container').addEventListener('change', saveReportDraft);
 
     window.onclick = function(event) {
