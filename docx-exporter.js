@@ -50,7 +50,30 @@ async function generateDocx(reportData) {
 
     // Add sections if they have content
     if (reportData.clinical_indication) children.push(createHeading("Clinical Indication"), createParagraph(reportData.clinical_indication));
-    if (reportData.technique_hr) children.push(createHeading("Technique"), createParagraph(`Prospective ECG-gated coronary CTA was performed. Heart rate at the time of acquisition was approximately ${reportData.technique_hr} bpm.`));
+    
+    // Updated Technique section to include Medications
+    if (reportData.technique_hr || reportData.medications) {
+        let techniqueContent = [];
+        if (reportData.technique_hr) {
+            techniqueContent.push(`Prospective ECG-gated coronary CTA was performed. Heart rate at the time of acquisition was approximately ${reportData.technique_hr} bpm.`);
+        }
+
+        const meds = [];
+        if (reportData.medications.betaloc) meds.push("Betaloc");
+        if (reportData.medications.nitro) meds.push("Nitroglycerine");
+        if (reportData.medications.other) meds.push(reportData.medications.other);
+        
+        if (meds.length > 0) {
+            // Add a newline if there was previous technique text
+            if(techniqueContent.length > 0) {
+                 techniqueContent.push(`\n`);
+            }
+            techniqueContent.push(`Medications administered: ${meds.join(', ')}.`);
+        }
+
+        children.push(createHeading("Technique"), createParagraph(techniqueContent.join('')));
+    }
+    
     if (reportData.technical_quality) children.push(createHeading("Technical Quality"), createParagraph(reportData.technical_quality));
 
     // Findings Section

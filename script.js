@@ -366,6 +366,13 @@ function gatherReportData() {
     return {
         clinical_indication: document.querySelector('[name="indication"]').value,
         technique_hr: document.getElementById('technique_hr').value,
+        // === MỤC MỚI ĐƯỢC THÊM VÀO ===
+        medications: {
+            betaloc: document.getElementById('med_betaloc').checked,
+            nitro: document.getElementById('med_nitro').checked,
+            other: document.getElementById('med_other').value,
+        },
+        // === KẾT THÚC MỤC MỚI ===
         technical_quality: document.getElementById('quality').value,
         calcium_scores: {
             lad: document.getElementById('lad_score').value,

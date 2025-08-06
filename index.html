@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coronary CTA Report Template</title>
-    <!-- Link to the external CSS file -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,6 +19,17 @@
         <p class="technique-p">Using a SOMATOM Drive scanner, a preliminary scout study was obtained, followed by coronary artery calcium protocol. Following administration of intravenous contrast, 0.5mm collimated images were obtained through the coronary arteries. Data were transferred off-line for 3D reconstructions including Curved MPR and multi-planar imaging.</p>
         <p class="technique-p"><strong>ACQUISITION:</strong> Prospective ECG triggering was used. Heart rate at the time of acquisition was approximately <input type="number" class="input-field short" value="64" id="technique_hr"> bpm.</p>
 
+        <div class="technique-p" id="medications-section">
+            <strong>MEDICATIONS:</strong>
+            <div style="padding-left: 20px; margin-top: 5px;">
+                <label><input type="checkbox" id="med_betaloc"> Betaloc</label>
+                <label style="margin-left: 15px;"><input type="checkbox" id="med_nitro"> Nitroglycerine</label>
+                <div style="margin-top: 5px;">
+                    <label for="med_other">Other: </label>
+                    <input type="text" id="med_other" class="input-field" style="width: 50%;" placeholder="e.g., Aspirin 100mg">
+                </div>
+            </div>
+        </div>
         <h3 class="section-title">TECHNICAL QUALITY</h3>
         <input list="quality-options" id="quality" name="quality" class="input-field full-width" value="Excellent, with no artifacts." placeholder="Select or type quality...">
         
@@ -58,10 +68,8 @@
         </table>
         <p id="score_interpretation"></p>
 
-        <!-- Container for the dynamically loaded Coronary Arteries section -->
         <div id="coronary-arteries-container">
-            <!-- Content from coronary_arteries.html will be loaded here -->
-        </div>
+            </div>
 
         <h4>3. Collateral Circulation</h4>
         <input list="collateral-options" id="collateral" name="collateral" class="input-field full-width" placeholder="Select or type description...">
@@ -81,8 +89,7 @@
         <div id="other-structures-section">
             <textarea id="other_structures_text" class="input-field full-width" rows="4">The pericardium and visualized extracardiac structures are unremarkable.</textarea>
             <div class="common-findings-buttons" id="other-structures-buttons">
-                <!-- Buttons will be added here by JS -->
-            </div>
+                </div>
         </div>
 
         <h3 class="section-title">IMPRESSION</h3>
@@ -97,8 +104,7 @@
         <input list="recommendations" id="recommendation" name="recommendation" class="input-field full-width" placeholder="Select or type a recommendation..." value="Clinical correlation.">
         
         <div id="report-indicator-container">
-            <!-- The report status indicator will be inserted here by script.js -->
-        </div>
+            </div>
 
         <div class="action-footer">
              <button class="action-btn" onclick="prepareForPrint()">View & Print Report</button>
@@ -106,7 +112,6 @@
         </div>
     </div>
 
-    <!-- All datalists remain here for the inputs to use -->
     <datalist id="indications">
         <option value=""></option>
         <option value="Atypical chest pain"></option>
@@ -249,9 +254,7 @@
         <option value="Optimal medical management is recommended."></option>
     </datalist>
 
-    <!-- Lesion Management Modal -->
     <div id="lesionModal" class="modal-overlay">
-        <!-- Modal content is still here to be used by script.js -->
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close-btn" onclick="closeLesionModal()">&times;</span>
@@ -278,15 +281,14 @@
                     </div>
                     <div class="form-row">
                         <label>Stenosis:</label>
-                        <input id="lesion-stenosis" list="stenosis-options" class="input-field" placeholder="e.g., 50-69% (moderate)">
+                        <input id="lesion-stenosis" list="stenosis-options" class="input-field" placeholder="e.g., 50-70% (moderate)">
                     </div>
                     <button class="manage-lesion-btn" style="background-color: #27ae60;" onclick="addLesionToModal()">Add This Lesion</button>
                 </div>
                 <hr style="margin: 20px 0;">
                 <h4>Current Lesions</h4>
                 <ul id="lesions-list-modal">
-                    <!-- Lesions will be added here dynamically -->
-                </ul>
+                    </ul>
             </div>
             <div class="modal-footer">
                 <button class="manage-lesion-btn" style="background-color: #2980b9;" onclick="saveLesions()">Save and Close</button>
@@ -294,7 +296,6 @@
         </div>
     </div>
     
-    <!-- Restore Session Modal -->
     <div id="restoreModal" class="modal-overlay">
         <div class="modal-content" style="max-width: 500px;">
             <div class="modal-header">
@@ -311,7 +312,6 @@
     </div>
 
 
-    <!-- Link to the external JavaScript files -->
     <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
     <script src="docx-exporter.js"></script>
     <script src="translation.js"></script>
