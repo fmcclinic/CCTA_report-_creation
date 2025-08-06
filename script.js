@@ -280,9 +280,15 @@ function generateImpressionSummary() {
     let hasNonObstructiveDisease = false;
     let riskLevel = 'normal'; // normal, warning, critical
 
-    // 1. Add Calcium Score
+    // 1. Add Calcium Score and its Interpretation
     const totalScore = parseInt(document.getElementById('total_score').textContent) || 0;
+    const scoreInterpretation = document.getElementById('score_interpretation').textContent; // Lấy văn bản diễn giải
+
     impressionLines.push(`Total Coronary Artery Calcium Score: ${totalScore}.`);
+    if (scoreInterpretation) {
+        impressionLines.push(scoreInterpretation); // Thêm diễn giải vào kết luận
+    }
+
     if (totalScore > 400) {
         riskLevel = 'critical';
     } else if (totalScore > 100) {
